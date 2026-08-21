@@ -1,0 +1,119 @@
+machines:
+  machine-simple:
+    hardware:
+      network_cards:
+        - vendor: Intel
+          product: I219-V
+          pci_address: 0000:00:00.1
+          ports:
+            - name: eth0
+              index: 0
+              mac_address: 11:22:33:44:55:66
+              max_speed: 1000
+              port_type: twisted_pair
+              transceiver_type: internal
+              link_detected: true
+              link_speed: 1000
+              link_duplex: full
+    port-config:
+      iface1:
+        type: physical
+        port_name: eth0
+        hw_mac_address: 11:22:33:44:55:66
+        mac_address: 11:22:33:44:55:66
+        untagged_vlan:
+          fabric: 1
+          vid: 0
+        tagged_vlans:
+          - fabric: 1
+            vid: 42
+          - fabric: 1
+            vid: 82
+    default-deploy-config:
+      iface1:
+        type: physical
+        links:
+          - mode: auto
+            subnet: 1
+      iface1.42:
+        type: vlan
+        link: iface1
+        vid: 42
+        links:
+          - mode: auto
+            subnet: 2
+
+  machine-bond:
+    hardware:
+      network_cards:
+        - vendor: Intel
+          product: I219-V
+          pci_address: 0000:00:00.1
+          ports:
+            - name: eth0
+              index: 0
+              mac_address: 11:22:33:44:55:66
+              max_speed: 1000
+              port_type: twisted_pair
+              transceiver_type: internal
+              link_detected: true
+              link_speed: 1000
+              link_duplex: full
+            - name: eth1
+              index: 1
+              mac_address: 22:33:44:55:66:77
+              max_speed: 1000
+              port_type: twisted_pair
+              transceiver_type: internal
+              link_detected: true
+              link_speed: 1000
+              link_duplex: full
+    port-config:
+      iface1:
+        type: bond
+        params:
+          bond_mode: 802.3ad
+        port_name: bond0
+        members:
+          - type: physical
+            port_name: eth0
+            hw_mac_address: 11:22:33:44:55:66
+            mac_address: 11:22:33:44:55:66
+          - type: physical
+            port_name: eth1
+            hw_mac_address: 22:33:44:55:66:77
+            mac_address: 22:33:44:55:66:77
+        untagged_vlan:
+          fabric: 1
+          vid: 0
+        tagged_vlans:
+          - fabric: 1
+            vid: 42
+          - fabric: 1
+            vid: 82
+        mac_address: 11:22:33:44:55:66
+        untagged_vlan:
+          fabric: 1
+          vid: 0
+        tagged_vlans:
+          - fabric: 1
+            vid: 42
+          - fabric: 1
+            vid: 82
+    default-deploy-config:
+      iface1:
+        type: physical
+        links:
+          - mode: auto
+            subnet: 1
+      iface1.42:
+        type: vlan
+        link: iface1
+        vid: 42
+        links:
+          - mode: auto
+            subnet: 2
+
+connections:
+  - from: machine-simple/eth0
+    to: unknown

@@ -1,0 +1,44 @@
+machines:
+  machine-simple:
+    network:
+      interfaces:
+      - name: eth0
+        mac: 11:22:33:44:55:66
+        link_connected: true
+        link_speed: 1000
+        interface_speed: 1000
+        vendor: Intel
+        product: I219-V
+        numa_node: 0
+        type: physical
+        vlan:
+          id: 1
+          vid: 0
+          mtu: 1500
+          fabric: 1
+        children:
+        - eth0.42
+        parents: []
+        links:
+        - mode: auto
+          subnet: 1
+      - name: eth0.42
+        mac: 11:22:33:44:55:66
+        link_connected: false
+        link_speed: 0
+        interface_speed: 0
+        vendor: null
+        product: null
+        numa_node: null
+        type: vlan
+        vlan:
+          id: 2
+          vid: 42
+          mtu: 1500
+          fabric: 1
+        children: []
+        parents:
+        - eth0
+        links:
+        - mode: auto
+          subnet: 2

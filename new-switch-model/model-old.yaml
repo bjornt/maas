@@ -1,0 +1,357 @@
+machines:
+  # Machine with single physical and single VLAN interface
+  machine-simple:
+    network:
+      interfaces:
+        - name: eth0
+          mac: 11:22:33:44:55:66
+          link_connected: true
+          link_speed: 1000
+          interface_speed: 1000
+          vendor: Intel
+          product: I219-V
+          numa_node: 0
+          # enabled: true
+          # effective_mtu: 1500
+          type: physical
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          children:
+            - eth0.42
+          parents: []
+          links:
+            - mode: auto
+              subnet: 1
+        - name: eth0.42
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: vlan
+          vlan:
+            id: 2
+            vid: 42
+            mtu: 1500
+            fabric: 1
+          children: []
+          parents:
+            - eth0
+          links:
+            - mode: auto
+              subnet: 2
+  machine-simple-bridge:
+    network:
+      interfaces:
+        - name: eth0
+          mac: 11:22:33:44:55:66
+          link_connected: true
+          link_speed: 1000
+          interface_speed: 1000
+          vendor: Intel
+          product: I219-V
+          numa_node: 0
+          # enabled: true
+          # effective_mtu: 1500
+          type: physical
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          children:
+            - br0
+            - eth0.42
+          parents: []
+          links: []
+        - name: eth0.42
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: vlan
+          vlan:
+            id: 2
+            vid: 42
+            mtu: 1500
+            fabric: 1
+          children:
+            - br1
+          parents:
+            - eth0
+          links: []
+        - name: br0
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: bridge
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          parents:
+            - eth0
+          links:
+            - mode: auto
+              subnet: 1
+        - name: br1
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: bridge
+          vlan:
+            id: 2
+            vid: 42
+            mtu: 1500
+            fabric: 1
+          parents:
+            - eth1
+          links:
+            - mode: auto
+              subnet: 1
+  machine-bond:
+    network:
+      interfaces:
+        - name: eth0
+          mac: 11:22:33:44:55:66
+          link_connected: true
+          link_speed: 1000
+          interface_speed: 1000
+          vendor: Intel
+          product: I219-V
+          numa_node: 0
+          # enabled: true
+          # effective_mtu: 1500
+          type: physical
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          children:
+            - bond0
+          parents: []
+          links: []
+        - name: eth1
+          mac: 22:33:44:55:66:77
+          link_connected: true
+          link_speed: 1000
+          interface_speed: 1000
+          vendor: Intel
+          product: I219-V
+          numa_node: 0
+          # enabled: true
+          # effective_mtu: 1500
+          type: physical
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          children:
+            - bond0
+          parents: []
+          links: []
+        - name: bond0
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: bond
+          params:
+            bond_mode: 802.3ad
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          children:
+            - bond0.42
+          parents:
+            - eth0
+            - eth1
+          links:
+            - mode: auto
+              subnet: 1
+        - name: bond0.42
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: vlan
+          vlan:
+            id: 2
+            vid: 42
+            mtu: 1500
+            fabric: 1
+          parents:
+            - bond0
+          links:
+            - mode: auto
+              subnet: 2
+  machine-bond:
+    network:
+      interfaces:
+        - name: eth0
+          mac: 11:22:33:44:55:66
+          link_connected: true
+          link_speed: 1000
+          interface_speed: 1000
+          vendor: Intel
+          product: I219-V
+          numa_node: 0
+          # enabled: true
+          # effective_mtu: 1500
+          type: physical
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          children:
+            - bond0
+          parents: []
+          links: []
+        - name: eth1
+          mac: 22:33:44:55:66:77
+          link_connected: true
+          link_speed: 1000
+          interface_speed: 1000
+          vendor: Intel
+          product: I219-V
+          numa_node: 0
+          # enabled: true
+          # effective_mtu: 1500
+          type: physical
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          children:
+            - bond0
+          parents: []
+          links: []
+        - name: bond0
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: bond
+          params:
+            bond_mode: 802.3ad
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          children:
+            - bond0.42
+            - br0
+          parents:
+            - eth0
+            - eth1
+          links: []
+        - name: bond0.42
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: vlan
+          vlan:
+            id: 2
+            vid: 42
+            mtu: 1500
+            fabric: 1
+          children:
+            - br0.42
+          parents:
+            - bond0
+          links: []
+        - name: br0
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: bridge
+          vlan:
+            id: 1
+            vid: 0
+            mtu: 1500
+            fabric: 1
+          parents:
+            - bond0
+          links:
+            - mode: auto
+              subnet: 1
+        - name: br1
+          mac: 11:22:33:44:55:66
+          link_connected: false
+          link_speed: 0
+          interface_speed: 0
+          vendor: null
+          product: null
+          numa_node: null
+          # enabled: true
+          # effective_mtu: 1500
+          type: bridge
+          vlan:
+            id: 2
+            vid: 42
+            mtu: 1500
+            fabric: 1
+          parents:
+            - bond0.42
+          links:
+            - mode: auto
+              subnet: 2
